@@ -1,3 +1,4 @@
+$(document).ready(function() {
 function submitEntry() {
         const name = $('#name').val();
         const email = $('#email').val();
@@ -7,7 +8,7 @@ function submitEntry() {
         const entry = `<div class="entry"><p><strong>${name}</strong> (${email})</p><p>${message}</p></div>`;
         $('#entries').append(entry);
 
-        if (!name || !email || !message) {
+        if (!name || !email || !message || !title) {
             alert('Lūdzu, aizpildiet visus obligātos laukus.');
             return;
         }
@@ -47,12 +48,23 @@ function submitEntry() {
             $(this).toggle(entryText.includes(searchTerm));
         });
     }
+    function sendToServer() {
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const message = $('#message').val();
+        const title = $('#title').val();
+    }
+    function runSearch() {
+        searchEntries();
+        sendToServer();
+    }
+
 
     function sortEntries() {
         const sortBy = $('#sort').val();
 
         const entries = $('.entry').get();
-        entries.sort(function(a, b) {
+        entries.sort(function(a, b, c, d) {
             const aValue = $(a).find('.' + sortBy).text().toLowerCase();
             const bValue = $(b).find('.' + sortBy).text().toLowerCase();
             
@@ -61,3 +73,5 @@ function submitEntry() {
 
         $('#entries').empty().append(entries);
     }
+
+});
